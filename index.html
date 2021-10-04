@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="portfolio\portfolio\support.css">
+    <title>Employee's Corner</title>
+</head>
+
+<body>   <style>
+   
+
+    .name{
+        visibility: visible;
+    }
+    .formdesign {
+        font-size: 20px;
+
+    }
+
+    .formdesign input {
+        width: 50%;
+        padding: 12px 20px;
+        border: 1px solid blue;
+        margin: 14px;
+        border-radius: 4px;
+        font-size: 15px;
+    }
+
+    .formerror {
+        color: red;
+    }
+
+    .but {
+        border-radius: 9px;
+        width: 100px;
+        height: 50px;
+        font-size: 25px;
+        margin: 22px 20px;
+    }
+    </style>
+
+
+    <style>
+.hideP{
+    visibility:hidden;
+}
+
+         .suggestions li {
+    background: white;
+    list-style: none;
+    border-bottom: 1px solid #D8D8D8;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.14);
+    margin: 0;
+    padding: 20px;
+    transition: background 0.2s;
+    display: flex;
+    justify-content: space-between;
+    text-transform: capitalize;
+  }
+  .suggestions li:nth-child(even) {
+    transform: perspective(100px) rotateX(3deg) translateY(2px) scale(1.001);
+    background: linear-gradient(to bottom,  #ffffff 0%,#EFEFEF 100%);
+  }
+  
+  .suggestions li:nth-child(odd) {
+    transform: perspective(100px) rotateX(-3deg) translateY(3px);
+    background: linear-gradient(to top,  #ffffff 0%,#EFEFEF 100%);
+  }
+  
+
+    </style>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="width:100%">
+        <a class="navbar-brand" href="#">Details</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Information
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">name</a>
+                        <a class="dropdown-item" href="#">present</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">absent</a>
+                        <a class="dropdown-item" href="#">salary</a>
+                        <a class="dropdown-item" href="#">Salary Deduction Multiplier</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Contact</a>
+                </li>
+            </ul>
+            <form class="form my-2 my-lg-0">
+
+                <input class="search" type="search" placeholder="Search" aria-label="Search">
+               
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="suggest" >Search</button> 
+               
+            </form>
+        </div>
+    </nav><div id="expect" class="hideP">
+    <ul class="suggestions" id="suggestions" style="visibility:hidden">
+        <li style="text-align: right; list-style-type:none; visibility: hidden;">Filter for Employee's name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</li>
+      </ul>
+      <div class="container my-4">
+          
+        <div class="form-group" style="visibility:visible">
+            <h3>LOGIN USING</h3>
+                    EMPCODE<input type="text" id="empi" name="fname" required style="visibility:visible"><b><span class="formerror"> </span></b>
+                </div>
+                <button class="btn btn-sm btn-primary" id="submit" style="visibility:visible" onclick="cheky(empi)" >Submit</button>
+        
+         
+                <div id="starters" class="my-4" style="display:none">
+                    <table class="tabla">
+                        <thead>
+                          <tr id="yee">
+                            <th scope="col">EMP ID</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tbi">
+                          <tr id='impor'>
+                            <td>ID123</td>
+                          </tr>   
+                        </tbody>
+                      </table>
+                </div></div>
+    <div class="container my-4">
+        <h2 class="text-center">Details</h2>
+        <div class="form-group"> <label for="year">Year</label><input class="form-control mr-sm-2" type="number" id="year" placeholder="Year" aria-label="Search"></div>
+<div class="form-group"> <label for="month">Month</label><input  class="form-control mr-sm-2" type="number" id="month" placeholder="Month" aria-label="Search"></div>
+            <div class="form-group">
+                <label for="title">Name</label>
+                <input type="text" class="form-control" id="title" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">Add a detail to the list</small>
+            </div>
+            <div class="form-group">
+                <label for="empcode">EMP Code</label>
+                <input type="text" class="form-control" id="empcode" >
+            </div>
+            <div class="form-group">
+                <label for="description">presents</label>
+                <input type="number" class="form-control" id="description" >
+            </div>
+          <div class="form-group">
+                <label for="absent">absent</label>
+                <input type="number" class="form-control" id="absent" >
+            </div>
+            
+            <div class="form-group">
+                <label for="sdm">Salary Deduction Multiplier</label>
+                <input type="number" class="form-control" id="sdm" >
+            </div>
+	    <div class="form-group">
+		<label for="salary">salary</label>
+		<input type="number" class="form-control" id="salary" >
+	    </div>
+            <button   id="add" class="btn btn-primary">Add to list</button>
+            <button  id="clear" class="btn btn-primary" onclick="clearStorage()">Clear list</button>
+         
+
+        <div id="items" class="my-4">
+            <h2>Your space</h2>
+            <table class="table">
+                <thead>
+                  <tr id="yo">
+                    <th scope="col">SNo</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">EMP code</th>
+                    <th scope="col">present</th> 
+                    <th scope="col">absent</th> 
+                    <th scope="col">sdm</th>
+		    <th scope="col">salary</th>
+            
+                  </tr>
+                </thead>
+                <tbody id="tableBody">
+                  <tr id='imp'>
+                    <th scope="row">1</th>
+                    <td>tom</td>
+                    <td>ID123</td>
+                    <td>3</td>
+		     <td>6</td>
+             <td>100</td>
+		    <td>797</td>
+            
+                    <td><button class="btn btn-sm btn-primary">Delete</button></td> 
+		     <td><button class="btn btn-sm btn-primary" onclick="edited(index)">Edit</button></td> 
+                  </tr>
+                  
+                </tbody>
+              </table>
+        </div>
+    </div></div>
+ 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+        <script src="file1.js"></script>
+        <script src="file2.js"></script>
+</body>
+</html>
