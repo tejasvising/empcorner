@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Empcorner</title>
+
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+  <style>
+    .suggestions{
+     
+      z-index:5;
+    }
+    a {
+            color: black;
+            text-decoration:none;
+         }
+  </style>
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/employees">List</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="/logout">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/employees/new">Employees</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li><li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+             
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+        </ul>
+        <form action='/employees/search' method='GET'>
+          <input class="form-control me-2" id='search' name='search' type="search" placeholder="Search by name" aria-label="Search">
+          <button class="btn btn-outline-success" id='button' type="submit">Search</button>
+        </form>
+        
+      </div>
+    </div>
+  </nav>
+  <center><div class='suggestions'></div></center>
+  <br><br><br><br><br>
+  <h1>All Employee Details</h1>
+  <div><a href="/employees/new">Add New Detail of an Employee</a></div>
+
+      <%for(let employee of employees){%>
+      
+      <%  if(employee.author.equals(user._id)){%>
+        <div class='card' mb-3>
+          <div class='row'>
+            <div class='col-md-4'>
+              <%=employee.name%> <span style='float:right' id='test'>Salary after deduction: <%=employee.actual_salary%></span>
+            </div>
+            <div class="col-md-8"><div class="card-body">
+              <h5 class="card-title">
+             EMPCODE: <%=employee.empcode%>
+              </h5><p class="card-text">Present for: <%=employee.present%> days</p><span style='float:right'>Absent for: <%=employee.absent%> days</span>
+              <p class='card-text'>Salary before deduction: <%=employee.salary%><span style='float:right'>SDM:<%=employee.sdm%></span></p>
+              <p class="card-text"><small class="text-muted"><%=employee.month%>,<%=employee.year%></small></p>
+              <a class='btn btn-primary' href='/employees/<%=employee._id%>'>View <%=employee.name%></a>
+            </div></div>
+          </div>
+        </div>
+   <%}%> <%}%>
+<script>
+
+function findMatches(wordToMatch, arr) {
+  console.log('this.value in find',wordToMatch)
+console.log('findmatches',arr);
+       const regex = new RegExp(wordToMatch, 'gi');
+console.log('regex',regex);
+      arr1=[];
+      i=0;
+ for(element of arr){
+   console.log('element in findMatches',element)
+   console.log('checking in',element.match(regex)) 
+   if(element.match(regex)!=null){
+arr1[i]=element;
+i++;
+   }
+}
+console.log(arr1)
+displayMatches(arr1)
+}
+    
+function displayMatches(arr1){
+  console.log('displaymatches',arr1)
+  suggestions.innerHTML='';
+  str='';
+  for(element in arr1){
+str+=element;
+ console.log('eke',arr1[element])
+ console.log('stringify',String(arr1[element]))
+suggestions.innerHTML+=`<a href='/employees/search/${arr1[element]}'>${arr1[element]}</a><br>`
+console.log('suggestions ka',suggestions.innerHTML)
+  }
+
+}
+
+
+
+
+
+
+
+
+
+    
+    const searchInput = document.getElementById('search');
+    const suggestions = document.querySelector('.suggestions');
+  
+   searchInput.addEventListener('change', testing);
+   searchInput.addEventListener('keyup', testing);
+  
+
+
+var employees=<%-JSON.stringify(employees)%>;
+
+test=document.getElementById('test').innerHTML
+function testing(){
+
+ arr=[];
+ i=0;
+ for(let employee of employees){
+   arr[i]=employee.name
+   i++;
+ 
+  }
+  console.log('testing',arr)
+  console.log('this.value',this.value)
+  findMatches(this.value,arr)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+    
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+crossorigin="anonymous"></script>
+</body>
+</html>

@@ -4,9 +4,9 @@
        
     
         console.log("Updating List...");
-        tit = document.getElementById('title').value;
-        console.log(tit);
-        desc = document.getElementById('description').value;
+        title = document.getElementById('name').value;
+       
+        present = document.getElementById('present').value;
         emp=document.getElementById('empcode').value;
         month=document.getElementById('month').value;
         
@@ -20,30 +20,30 @@ let abs=0;
 if(abs==0){
 
 if(month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12){
-abs=31-desc;
+abs=31-present;
 salary=paisa-abs*sdm;}
 
 if(month==2)
 {
 if(year%4==0)
 {
-abs=29-desc;
+abs=29-present;
 }
 else if((year%4)!=0)
 {
-abs=28-desc;
+abs=28-present;
 }
 }
 if(month==4 || month==6 || month==9 || month==11){
-abs=30-desc;}}
-if(abs<0 || month>12 || desc>31){
+abs=30-present;}}
+if(year%4==0 || month==2 || present>29){
 alert("Error");
 }
 
 
 
 /*
-if(month>12 || desc>31 || abs<0){
+if(month>12 || present>31 || abs<0){
     a=false;
 }*/
 
@@ -54,7 +54,7 @@ if(month>12 || desc>31 || abs<0){
     } */
     sal=paisa-abs*sdm;
     
-       if(abs<0 || month>12 || desc>31){
+       if(abs<0 || month>12 || present>31){
            
            return;
            console.log("yo");
@@ -63,7 +63,7 @@ if(month>12 || desc>31 || abs<0){
         
         if (localStorage.getItem('itemsJson')==null){
             itemJsonArray = [];
-            itemJsonArray.push([tit,emp,desc,abs,sdm,sal]);
+            itemJsonArray.push([title,emp,present,abs,sdm,sal]);
             localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
 
         }
@@ -71,7 +71,7 @@ if(month>12 || desc>31 || abs<0){
             
             itemJsonArrayStr = localStorage.getItem('itemsJson')
             itemJsonArray = JSON.parse(itemJsonArrayStr);
-            itemJsonArray.push([tit,emp,desc,abs,sdm,sal]);
+            itemJsonArray.push([title,emp,present,abs,sdm,sal]);
             localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
             console.log("yeah");
         }
@@ -137,9 +137,9 @@ function edited(itemIndex){
     
    
     
-    document.getElementById("title").value= tb.rows[itemIndex].cells[1].textContent;
+    document.getElementById("name").value= tb.rows[itemIndex].cells[1].textContent;
     document.getElementById("empcode").value= tb.rows[itemIndex].cells[2].textContent;
-    document.getElementById("description").value = parseInt(tb.rows[itemIndex].cells[3].textContent);
+    document.getElementById("present").value = parseInt(tb.rows[itemIndex].cells[3].textContent);
     document.getElementById("month").value = tb.rows[itemIndex].cells[4].textContent;
     document.getElementById("sdm").value = parseInt(tb.rows[itemIndex].cells[5].textContent);
     document.getElementById("salary").value = parseInt(tb.rows[itemIndex].cells[6].textContent);
@@ -149,9 +149,9 @@ function edited(itemIndex){
 }
 function updateRecord(itemJsonArray) {
     let tb= document.getElementById('tableBody');
-tb.rows[0].cells[0].innerHTML = itemJsonArray.tit;
+tb.rows[0].cells[0].innerHTML = itemJsonArray.title;
 
-yo.cells[1].innerHTML = itemJsonArray.desc;
+yo.cells[1].innerHTML = itemJsonArray.present;
 yo.cells[2].innerHTML = itemJsonArray.abs;
 yo.cells[3].innerHTML = itemJsonArray.sal;
 }
@@ -243,15 +243,15 @@ yo.cells[3].innerHTML = itemJsonArray.sal;
     searchInput.addEventListener('keyup', displayMatches);
   
     
-    function hide(param){
-        console.log("you are precious");
-        document.getElementById(param).style.visibility ='hidden';
-    }
-var expect=document.getElementById('expect');
-    function show(){
-        console.log("you are precious");
-        expect.classList.toggle('hideP');
-    }
+//     function hide(param){
+//         console.log("you are precious");
+//         document.getElementById(param).style.visibility ='hidden';
+//     }
+// var expect=document.getElementById('expect');
+//     function show(){
+//         console.log("you are precious");
+//         expect.classList.toggle('hideP');
+//     }
    // $('#suggestions').toggle();
  /*   $('body').on('click','#suggestions', function(){
 $('#suggestions').toggle();
@@ -269,20 +269,20 @@ const suggest=document.getElementById('.suggestions')
 //   console.log("lo ajj m kehta hu") //'one' will delete from array
 // }
 //})
-submit=document.getElementById('submit');
-submit.addEventListener('click',cheky(empi));
+// submit=document.getElementById('submit');
+// submit.addEventListener('click',cheky(empi));
 
 
-er=JSON.stringify(empi)
+// er=JSON.stringify(empi)
 
-function cheky(empi){
-  empi=document.getElementById('empi').value;
-itemJsonArray.forEach(function(element){
-  if(element[1]==empi){
-console.log(element[1]);
-show();
-  }
+// function cheky(empi){
+//   empi=document.getElementById('empi').value;
+// itemJsonArray.forEach(function(element){
+//   if(element[1]==empi){
+// console.log(element[1]);
+// show();
+//   }
 
-})}
+// })}
 
    
