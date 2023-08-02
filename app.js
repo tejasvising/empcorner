@@ -294,6 +294,9 @@ const validateEmployee=(req,res)=>{
 
 // })
 
+app.get('/', (req, res) => {
+  res.render('home')
+});
 
 passport.use(new GoogleStrategy({
     clientID:     GOOGLE_CLIENT_ID,
