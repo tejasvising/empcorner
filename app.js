@@ -39,7 +39,7 @@ const helmet=require('helmet');
  //     console.log('connected to MongoDB')
  // });
 const MongoDBstore = require("connect-mongo");
-mongoose.connect('mongodb://localhost:27017/empcorner',{
+mongoose.connect(dbUrl,{
  useNewUrlParser:true,
  //useCreateIndex:true,
   useUnifiedTopology:true,
@@ -114,7 +114,7 @@ app.use(
 // app.use(bodyParser.urlencoded({extended : true}));
 // app.use(bodyParser.json());
 const store=new MongoDBstore({
-  mongoUrl:'mongodb://localhost:27017/empcorner',
+  mongoUrl:dbUrl,
   secret:'thisshouldbeabettersecret!',
   touchAfter:24*60*60,
 })
