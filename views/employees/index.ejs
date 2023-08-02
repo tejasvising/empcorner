@@ -10,7 +10,7 @@
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
   <style>
     .suggestions{
      
@@ -35,14 +35,15 @@
           <li class="nav-item">
             <a class="nav-link" href="/employees/new">Employees</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/register">Register</a>
-          </li><li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
-          </li>
+          <% if(!currentUser) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Register</a>
+            </li><li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <% } else { %>
+              <a class="nav-link" href="/logout">Logout</a>
+              <% } %> 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown
@@ -58,8 +59,8 @@
             <a class="nav-link disabled">Disabled</a>
           </li>
         </ul>
-        <form action='/employees/search' method='GET'>
-          <input class="form-control me-2" id='search' name='search' type="search" placeholder="Search by name" aria-label="Search">
+        <form action='/employees/search' method='GET' >
+          <input class="form-control" id='search' name='search' type="search" placeholder="Search by name" aria-label="Search">
           <button class="btn btn-outline-success" id='button' type="submit">Search</button>
         </form>
         
@@ -67,16 +68,17 @@
     </div>
   </nav>
   <center><div class='suggestions'></div></center>
-  <br><br><br><br><br>
+  <br>
+  <main class="container mt-5">
   <h1>All Employee Details</h1>
   <div><a href="/employees/new">Add New Detail of an Employee</a></div>
 
       <%for(let employee of employees){%>
       
       <%  if(employee.author.equals(user._id)){%>
-        <div class='card' mb-3>
+        <div class='card container mt-3' mb-3>
           <div class='row'>
-            <div class='col-md-4'>
+            <div class='col-md-4 mb-3 mt-2'>
               <%=employee.name%> <span style='float:right' id='test'>Salary after deduction: <%=employee.actual_salary%></span>
             </div>
             <div class="col-md-8"><div class="card-body">
@@ -89,7 +91,7 @@
             </div></div>
           </div>
         </div>
-   <%}%> <%}%>
+   <%}%> <%}%></main>
 <script>
 
 function findMatches(wordToMatch, arr) {

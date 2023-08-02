@@ -1,50 +1,21 @@
  const express=require('express');
  const router=express.Router();
+ const session=require('express-session');
  const passport = require('passport');
  const catchAsync=require('../utils/catchAsync');
  const Owner=require('../models/owner');
+const { isLoggedIn } = require('../middleware');
+const validator = require("email-validator");
+const owners = require('../controllers/owners');
+router.route('/register')
+    .get(owners.renderRegister)
+    .post(catchAsync(owners.register));
 
- router.get('/register',(req,res)=>{
-     res.render('owners/register')
- })
+router.route('/login')
+    .get(owners.renderLogin)
+    .post(passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), owners.login)
 
- router.post('/register',async(req,res)=>{
-     try{
-         const {email,username,password}=req.body;
-     const owner=new Owner({email,username});
-    // owner.author=req.user._id;
-   
-     const registeredOwner=await Owner.register(owner,password);
-     console.log(registeredOwner)
-     console.log(req.user._id)
-     req.flash('success','welcome to yelpcamp');
-     const redirectUrl = req.session.returnTo || '/employees';
-     res.redirect(redirectUrl);
-return redirectUrl;
-
- }
-     catch(e){
-         req.flash('error',e.message)
-         res.redirect('register')
-     }
-   
- });
-
- router.get('/login',(req,res)=>{
- res.render('owners/login')
- })
- router.post('/login',passport.authenticate('local',{failureFlash:true,failureRedirect:'/login'}),(req,res)=>{
-    req.flash('success', 'welcome back!');
-    
-    const redirectUrl = req.session.returnTo || '/employees';
-    delete req.session.returnTo;
-    res.redirect(redirectUrl);
- })
- router.get('/logout', (req,res)=>{
-     
-    req.logout();
-    // req.session.destroy();
-    req.flash('success', "Goodbye!");
-    res.redirect('/login');
- })
+router.get('/logout', owners.logout)
+router.get('/auth/google',passport.authenticate('google', { scope:[ 'email', 'profile' ] }))
+router.get('/auth/google/callback',passport.authenticate( 'google', {successRedirect: '/employees',failureRedirect: '/login'}))
  module.exports=router;

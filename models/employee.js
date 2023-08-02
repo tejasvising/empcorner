@@ -1,7 +1,8 @@
+
 const mongoose=require('mongoose')
 const Schema = mongoose.Schema;
 n=new Date();
-const employeeSchema=new mongoose.Schema({
+const employeeSchema=new Schema({
     year:{
         type:Number,
         required: true,
@@ -25,15 +26,15 @@ const employeeSchema=new mongoose.Schema({
         type:Number,
         required: true,
         max:31
-        // validate: {
-        //     validator: function(v) {
-        //         if(year%4==0 && month==2 && present>29){
-        //             throw new Error('Need to get a Turbo Man for Christmas');
+     //  validate: {
+         //    validator: function(v) {
+           //    if(year%4==0 && month==2 && present>29){
+          ///         throw new Error('Need to get a Turbo Man for Christmas');
 
-        //         }
-        //     },
-        //     message: props => `${props.value} is not a valid phone number!`
-        //   },
+        //        }
+       //      },
+     //       message: props => `${props.value} is not a valid phone number!`
+    //       },
         
     },
     absent:{

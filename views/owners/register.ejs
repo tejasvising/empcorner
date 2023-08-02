@@ -10,13 +10,22 @@
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 
 
-
+  <main class="container mt-5">
 <h1>Register</h1>
+<% if(messages && messages.length) {%>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+     <%=messages%>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <% } %>
 <form action='/register' class='validated-form' method='POST' novalidate>
     <div class="mb-3">
+     
         <label class='form-label' for="username">Username</label>
    
         
@@ -42,7 +51,33 @@
       </div></div>
       <button class='btn btn-success'>Register</button>
 </form>
+<h6>Already have an account?</h6>
+<button class='btn btn-danger'><a href='/login' style="color:white">Login</a></button>
+<button class='btn btn-danger'><a href='/auth/google' style="color:white">Authenticate with google</a></button>
+</main>
+<script>
+  (function () {
+    'use strict'
 
+    bsCustomFileInput.init()
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.validated-form')
+
+    // Loop over them and prevent submission
+    Array.from(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 crossorigin="anonymous"></script>

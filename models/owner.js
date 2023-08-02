@@ -1,6 +1,7 @@
 const mongoose=require('mongoose');
 const Schema=mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
+const findOrCreate=require("mongoose-findorcreate")
 
 const OwnerSchema=new Schema({
     email:{
@@ -13,5 +14,6 @@ const OwnerSchema=new Schema({
         ref: 'Owner'
     }
 });
+OwnerSchema.plugin(findOrCreate);
 OwnerSchema.plugin(passportLocalMongoose);
 module.exports=mongoose.model('Owner',OwnerSchema);

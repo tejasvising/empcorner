@@ -10,8 +10,17 @@
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
+  <main class="container mt-5">
 <h1>Login</h1>
+<% if(messages && messages.length) {%>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= messages %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <% } %>
 <form action='/login' class='validated-form' method='POST' novalidate>
     <div class="mb-3">
         <label class='form-label' for="username">Username</label>
@@ -32,7 +41,11 @@
       </div></div>
       <button class='btn btn-success'>Login</button>
 </form>
-New to this place? <a href='/register'>Create an account</a>
+<br>
+<button class='btn btn-danger'><a href='/auth/google' style="color:white">Authenticate with google</a></button>
+<button class='btn btn-success'><a href='/register' style="color:white">Register</a></button>
+</main>
+<script src='/javascripts/validateForms.js'></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 crossorigin="anonymous"></script>
