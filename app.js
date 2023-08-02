@@ -6,7 +6,13 @@ if(process.env.NODE_ENV !== 'production'){
 }
 const express=require('express')
 //var bodyParser = require('body-parser')
+const paypal_client_id=process.env.paypal_client_id
+const paypal_client_secret=process.env.paypal_client_secret
+const razorpay_key_id=process.env.razorpay_key_id
+const razorpay_key_secret=process.env.razorpay_key_secret
 
+const paypal = require('paypal-rest-sdk');
+const Razorpay = require('razorpay');
 const findOrCreate=require("mongoose-findorcreate")
 const GoogleStrategy=require('passport-google-oauth2').Strategy;
 const mongoose=require('mongoose')
@@ -19,7 +25,7 @@ var methodOverride = require('method-override')
 
 const passport=require('passport')
 const LocalStrategy=require('passport-local')
-
+//const paypal=require('paypal')
 
 const ownerRoutes=require('./routes/owner')
 const employeeRoutes=require('./routes/employee');
@@ -31,6 +37,7 @@ const GOOGLE_CLIENT_ID=process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET=process.env.GOOGLE_CLIENT_SECRET
 const mongoSanitize=require('express-mongo-sanitize');
 const helmet=require('helmet');
+const sign=process.env.sign;
 //const MongoStore = require('connect-mongo');
 //'mongodb://localhost:27017/empcorner'
 //mongoose.connect('mongodb://localhost:27017/empcorner',
@@ -294,6 +301,19 @@ const validateEmployee=(req,res)=>{
 
 // })
 
+
+//paypal.configure({
+ // 'mode': 'sandbox', //sandbox or live
+ // 'client_id': paypal_client_id,
+ // 'client_secret': paypal_client_secret
+//});
+
+
+var instance = new Razorpay({
+  key_id: razorpay_key_id,
+  key_secret: razorpay_key_secret,
+});
+
 app.get('/', (req, res) => {
   res.render('home')
 });
@@ -318,7 +338,7 @@ app.post("/api/payment/verify",(req,res)=>{
   let body=req.body.response.razorpay_order_id + "|" + req.body.response.razorpay_payment_id;
  
    var crypto = require("crypto");
-   var expectedSignature = crypto.createHmac('sha256', '4ZDZdt5hMFGADxI5HhljInw4')
+   var expectedSignature = crypto.createHmac('sha256', sign)
                                    .update(body.toString())
                                    .digest('hex');
                                    console.log("sig received " ,req.body.response.razorpay_signature);
