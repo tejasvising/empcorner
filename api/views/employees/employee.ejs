@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+  
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="portfolio\portfolio\support.css"> -->
+
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <title>Employee's Corner</title>
+</head>
+
+<body>  
+     
+    
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">List</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="/">List</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/new">Employees</a>
+            </li>
+            <% if(!currentUser) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Register</a>
+            </li><li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <% } else { %>
+              <a class="nav-link" href="/logout">Logout</a>
+              <% } %> 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Disabled</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+   
+    <div class="row">
+        <h1 class="text-center">Employee Details</h1>
+        <div class="col-6 offset-3">    
+          <form action='/employees' method='POST' novalidate class='validated-form'>
+            <div class='mb-3'>
+                <label class='form-label' for="year">Year</label>
+                <input class='form-control' type="number" id='year' name='year' required>
+           <div class="valid-feedback">
+             Looks good!
+           </div>
+              </div>
+            <div class='mb-3'>
+                <label class='form-label' for="month">Month</label>
+                <input  class='form-control' type="number" id='month' name='month' max="12" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+            <div class='mb-3'>
+                <label class='form-label' for="name">Name</label>
+                <input  class='form-control' type="text" id='name' name='name' required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+            <div class="mb-3">
+                <label class='form-label' for="empcode">Empcode</label>
+            <div class="input-group">
+                
+                <input type="text" class="form-control" id='empcode' name='empcode' required>
+              </div> <div class="valid-feedback">
+                Looks good!
+              </div></div>
+              
+           
+                                           
+                  <div class='mb-3'>
+                    <label class='form-label' for="present">Present</label>
+                    <input type="number" class="form-control" id='present' name='present' min='0' max="31" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                      Invalid!
+                    </div>
+                  </div>
+              <div class='mb-3'>
+                <label class='form-label' for="absent">Absent</label>
+                <input type="number" class="form-control" id='absent' name='absent' min='0' max="31" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <div class='mb-3'>
+                <label class='form-label' for="sdm">Salary Deduction Multiplier</label>
+                <input type="number" class="form-control" id='sdm' name='sdm' min='0' required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <div class='mb-3'>
+                <label class='form-label' for="salary">Salary</label>
+                <input type="number" class="form-control" id='salary' name='salary' min='0' required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+           <div class="mb-3"><button class='btn btn-success' onclick="getAndUpdate()">Submit</button></div>
+            
+        </form>
+       <!-- <a href='/campgrounds'>All campgrounds</a>-->
+    </div>
+    </div>
+ <script>
+  const forms = document.querySelectorAll('.validated-form')
+  title = document.getElementById('name').value;
+ year=document.getElementById('year').value;
+ month=document.getElementById('month').value;
+ present = document.getElementById('present').value;
+ emp=document.getElementById('empcode').value;
+ month=document.getElementById('month').value;
+ 
+ sdm=document.getElementById('sdm').value;
+ sal=document.getElementById('salary').value;
+
+
+// Loop over them and prevent submission
+Array.from(forms)
+  .forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      if(year%4==0 && month==2 && present>29){
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      if(year%4!=0 && month==2 && present>28){
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      if((month==4 || month==6 || month==9 || month==11) && present>30){
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  }) 
+ 
+ 
+ function getAndUpdate(e){
+       
+      
+  console.log("Updating List...");
+  title = document.getElementById('name').value;
+ 
+  present = document.getElementById('present').value;
+  emp=document.getElementById('empcode').value;
+  month=document.getElementById('month').value;
+  
+  sdm=document.getElementById('sdm').value;
+  sal=document.getElementById('salary').value;
+  
+ let paisa=sal;
+let abs=0;
+
+
+if(abs==0){
+
+if(month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12){
+abs=31-present;
+salary=paisa-abs*sdm;}
+
+if(month==2)
+{
+if(year%4==0)
+{
+abs=29-present;
+}
+else if((year%4)!=0)
+{
+abs=28-present;
+}
+}
+if(month==4 || month==6 || month==9 || month==11){
+abs=30-present;}}
+if(year%4==0 &&  month==2 && present>29){
+alert("No. of days in february in a leap year can't be greater than 29 ");
+
+//throw new Error('No. of days present cannot be more than number of days in a month');
+
+}
+if(year%4!=0 && month==2 && present>28){
+alert("No. of days in february when it's not leap year can't be greater than 28 ");
+
+//throw new Error('No. of days present cannot be more than number of days in a month');
+
+}
+if((month==4 || month==6 || month==9 || month==11) && present>30){
+alert("No. of days in the given month can't be greater than 30");
+
+//throw new Error('No. of days present cannot be more than number of days in a month');
+
+}
+
+
+
+/*
+if(month>12 || present>31 || abs<0){
+a=false;
+}*/
+
+/*  if(month>12 || desc>31 || abs<0){
+
+  event.preventDefault();
+
+} */
+sal=paisa-abs*sdm;
+
+ if(abs<0 || month>12 || present>31){
+     
+     return;
+     console.log("yo");
+ }
+ 
+  
+  if (localStorage.getItem('itemsJson')==null){
+      itemJsonArray = [];
+      itemJsonArray.push([title,emp,present,abs,sdm,sal]);
+      localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+
+  }
+  else{
+      
+      itemJsonArrayStr = localStorage.getItem('itemsJson')
+      itemJsonArray = JSON.parse(itemJsonArrayStr);
+      itemJsonArray.push([title,emp,present,abs,sdm,sal]);
+      localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+      console.log("yeah");
+  }
+  
+ update();
+ /* if(a==false){
+      a=true;
+      return true;
+  } */
+}
+
+
+function update(){
+  if (localStorage.getItem('itemsJson')==null){
+      itemJsonArray = []; 
+      localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+  } 
+  else{
+      itemJsonArrayStr = localStorage.getItem('itemsJson')
+      itemJsonArray = JSON.parse(itemJsonArrayStr); 
+  }
+  // Populate the table
+  let tableBody = document.getElementById("tableBody");
+  let str = "";
+  itemJsonArray.forEach((element, index) => {
+      str += `
+      <tr>
+      <th scope="row" >${index + 1}</th>
+      <a id=${index+1}><td>${element[0]}</td></a>
+      <td>${element[1]}</td> 
+      <td>${element[2]}</td> 
+<td>${element[3]}</td>
+<td>${element[4]}</td>
+<td>${element[5]}</td>
+
+
+      <td><button class="btn btn-sm btn-primary" onclick="deleted(${index})">Delete</button></td> 
+<td><button class="btn btn-sm btn-primary" onclick="edited(${index})">Edit</button></td> 
+      </tr>`; 
+  });
+  tableBody.innerHTML = str;
+  
+}
+add = document.getElementById("add");
+add.addEventListener("click", getAndUpdate);
+update();
+function deleted(itemIndex){
+  console.log("Delete", itemIndex);
+  
+  itemJsonArrayStr = localStorage.getItem('itemsJson')
+
+  itemJsonArray = JSON.parse(itemJsonArrayStr);
+  // Delete itemIndex element from the array
+  itemJsonArray.splice(itemIndex, 1);
+  localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+  update();
+
+}
+
+
+function edited(itemIndex){
+let tb= document.getElementById('tableBody');
+
+
+
+document.getElementById("name").value= tb.rows[itemIndex].cells[1].textContent;
+document.getElementById("empcode").value= tb.rows[itemIndex].cells[2].textContent;
+document.getElementById("present").value = parseInt(tb.rows[itemIndex].cells[3].textContent);
+document.getElementById("month").value = tb.rows[itemIndex].cells[4].textContent;
+document.getElementById("sdm").value = parseInt(tb.rows[itemIndex].cells[5].textContent);
+document.getElementById("salary").value = parseInt(tb.rows[itemIndex].cells[6].textContent);
+deleted(itemIndex);
+update();
+
+}
+function updateRecord(itemJsonArray) {
+let tb= document.getElementById('tableBody');
+tb.rows[0].cells[0].innerHTML = itemJsonArray.title;
+
+yo.cells[1].innerHTML = itemJsonArray.present;
+yo.cells[2].innerHTML = itemJsonArray.abs;
+yo.cells[3].innerHTML = itemJsonArray.sal;
+}
+
+
+
+function clearStorage(){
+  if (confirm("Do you areally want to clear?")){
+  console.log('Clearing the storage')
+  localStorage.clear();
+  update()
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+/*  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+const cities = [];
+fetch(endpoint)
+.then(blob => blob.json())
+.then(data => cities.push(...data)); */
+
+/* function findMatches(wordToMatch, itemJsonArrayStr) {
+  let t=JSON.parse(itemJsonArrayStr);
+return t.filter(place => {
+  // here we need to figure out if the city or state matches what was searched
+  const regex = new RegExp(wordToMatch, 'gi');
+ 
+  return t[0][0].match(regex)
+});
+} */
+
+function findMatches(wordToMatch, itemJsonArrayStr) {
+  let t=JSON.parse(itemJsonArrayStr);
+ return t.filter(element => {
+  // here we need to figure out if the city or state matches what was searched
+  const regex = new RegExp(wordToMatch, 'gi');
+  console.log(element[0])
+  return element[0].match(regex)
+  
+});
+}
+
+function numberWithCommas(x) {
+return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+let x=true;
+function displayMatches() {
+
+
+const matchArray = findMatches(this.value, itemJsonArrayStr);
+console.log(matchArray);
+const html = matchArray.map(place => {
+  const regex = new RegExp(this.value, 'gi');
+  const cityName = place[0].replace(regex, `<span class="hl">${this.value}</span>`);
+  let index=guess();
+  return `
+    <li>
+      <span class="name" style="list-style-type:none"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<a href=#${index+1}>${cityName}</a></span>   
+    </li>
+  `;
+}).join('');
+suggestions.innerHTML = html;
+x=!x;
+}
+function guess(){
+  let wordToMatch=findMatches(this.value,itemJsonArrayStr)
+  let t=tableBody.innerHTML.match(/(\d(\")(\>)wordToMatch)/gi)
+  console.log(t);
+  return t;
+
+}
+
+
+
+const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+
+searchInput.addEventListener('change', displayMatches);
+searchInput.addEventListener('keyup', displayMatches);
+
+
+//     function hide(param){
+//         console.log("you are precious");
+//         document.getElementById(param).style.visibility ='hidden';
+//     }
+// var expect=document.getElementById('expect');
+//     function show(){
+//         console.log("you are precious");
+//         expect.classList.toggle('hideP');
+//     }
+// $('#suggestions').toggle();
+/*   $('body').on('click','#suggestions', function(){
+$('#suggestions').toggle();
+document.getElementById('.suggestions').style.visibility ='hidden'; 
+})
+*/
+const suggest=document.getElementById('.suggestions')
+</script>
+
+
+
+
+ <script>
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.validated-form')
+
+  // Loop over them and prevent submission
+  Array.from(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()</script> 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src='/javascripts/validateForms.js'></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+        <!-- <script src="../file1.js"></script>
+        <script src="file2.js"></script>  -->
+        
+</body>
+</html>
