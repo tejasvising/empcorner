@@ -10,7 +10,7 @@ module.exports.renderRegister = (req, res) => {
     res.render('owners/register');
 }
 
-module.exports.authgoogle=
+
 
 module.exports.register = async (req, res, next) => {
     try {

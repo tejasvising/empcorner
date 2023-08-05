@@ -32,6 +32,7 @@ const employeeRoutes=require('./routes/employee');
 
 const catchAsync=require('./utils/catchAsync');
 const path=require('path');
+const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 const dbUrl=process.env.DB_URL
 const GOOGLE_CLIENT_ID=process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET=process.env.GOOGLE_CLIENT_SECRET
@@ -120,16 +121,20 @@ app.use(
 // app.use(bodyParser.urlencoded());
 // app.use(bodyParser.urlencoded({extended : true}));
 // app.use(bodyParser.json());
+
+
 const store=new MongoDBstore({
   mongoUrl:dbUrl,
-  secret:'thisshouldbeabettersecret!',
+  secret:secret,
   touchAfter:24*60*60,
 })
 store.on("error",function(e){
   console.log("SESSION STORE ERROR",e)
 })
+
+
 const sessionConfig={
-  store,
+  store:store,
   name:'session',
   secret:'thisshouldbeabettersecret!',
   resave:false,

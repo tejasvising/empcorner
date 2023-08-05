@@ -4,6 +4,7 @@
     },
     "main":"index.js",
     "scripts": {
+       "build": "react-scripts build",
         "start": "node index.js",
         "server":"node index.js"
     },
