@@ -11,6 +11,8 @@ const paypal_client_secret=process.env.paypal_client_secret
 const razorpay_key_id=process.env.razorpay_key_id
 const razorpay_key_secret=process.env.razorpay_key_secret
 
+
+const https = require("https");
 const paypal = require('paypal-rest-sdk');
 const Razorpay = require('razorpay');
 const findOrCreate=require("mongoose-findorcreate")
@@ -451,7 +453,7 @@ app.use((err,req,res,next)=>{
  
 })
 const port = process.env.PORT || 3000;
- app.listen(port,()=>{
+https.createServer(app).listen(port,()=>{
     console.log(`Serving on port ${port}`)
  })
 
