@@ -12,7 +12,7 @@ const razorpay_key_id=process.env.razorpay_key_id
 const razorpay_key_secret=process.env.razorpay_key_secret
 
 
-const https = require("https");
+
 const paypal = require('paypal-rest-sdk');
 const Razorpay = require('razorpay');
 const findOrCreate=require("mongoose-findorcreate")
@@ -35,12 +35,17 @@ const employeeRoutes=require('./routes/employee');
 const catchAsync=require('./utils/catchAsync');
 const path=require('path');
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
-const dbUrl=process.env.DB_URL
+const dbUrl=  process.env.DB_URL
 const GOOGLE_CLIENT_ID=process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET=process.env.GOOGLE_CLIENT_SECRET
 const mongoSanitize=require('express-mongo-sanitize');
 const helmet=require('helmet');
 const sign=process.env.sign;
+
+const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
+ 
+// Don't redirect if the hostname is `localhost:port` or the route is `/insecure`
+
 //const MongoStore = require('connect-mongo');
 //'mongodb://localhost:27017/empcorner'
 //mongoose.connect('mongodb://localhost:27017/empcorner',
@@ -72,6 +77,10 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(mongoSanitize());
 app.use(flash());
 app.use(helmet());
+
+app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301)); 
+
+
 const scriptSrcUrls = [
   "https://checkout.razorpay.com/v1/checkout.js",
   "https://code.jquery.com/jquery-3.5.1.slim.min.js",
@@ -143,7 +152,7 @@ const sessionConfig={
   saveUninitialized:true,
   cookie:{
       httpOnly:true,
-      secure:true,
+      //secure:true,
       express:Date.now()+1000*60*60*24*7,
       maxAge:1000*60*60*24*7
   }
@@ -453,7 +462,7 @@ app.use((err,req,res,next)=>{
  
 })
 const port = process.env.PORT || 3000;
-https.createServer(app).listen(port,()=>{
+app.listen(port,()=>{
     console.log(`Serving on port ${port}`)
  })
 
