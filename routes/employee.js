@@ -1,5 +1,5 @@
 const express=require('express');
-const paypal = require('paypal-rest-sdk');
+//const paypal = require('paypal-rest-sdk');
 const router=express.Router();
 const {isLoggedIn,isAuthor,validateEmployee} = require('../middleware');
 const catchAsync = require('../utils/catchAsync');
@@ -10,11 +10,11 @@ const Employee=require('../models/employee');
 const employees = require('../controllers/employees');
 const passport=require('passport')
 const Razorpay = require('razorpay');
-paypal.configure({
+/*paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': 'AR5CRs9Oo3Ako7MO818Tgc_GUvBrDqhpmtUJRw8kmBqV8BMJXOMdarCTbJk-Om_CavgK3aTVMK7dsG8m',
   'client_secret': 'EOkAyUbtOhao9FdybaLz3s_bK1W8MF27JQnDdj8Qjz5QjzA0bDITHKjCyWvuulqYpFHQdOL4qhinRajK'
-});
+});*/
 var instance = new Razorpay({
   key_id: 'rzp_test_z5CdHKLS42pn1W',
   key_secret: '4ZDZdt5hMFGADxI5HhljInw4',
