@@ -5,7 +5,7 @@ if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config();
 }
 const express=require('express')
-//var bodyParser = require('body-parser')
+
 const paypal_client_id=process.env.paypal_client_id
 const paypal_client_secret=process.env.paypal_client_secret
 const razorpay_key_id=process.env.razorpay_key_id
@@ -27,7 +27,7 @@ var methodOverride = require('method-override')
 
 const passport=require('passport')
 const LocalStrategy=require('passport-local')
-//const paypal=require('paypal')
+
 
 const ownerRoutes=require('./routes/owner')
 const employeeRoutes=require('./routes/employee');
@@ -44,21 +44,13 @@ const sign=process.env.sign;
 
 
  
-// Don't redirect if the hostname is `localhost:port` or the route is `/insecure`
 
-//const MongoStore = require('connect-mongo');
-//'mongodb://localhost:27017/empcorner'
-//mongoose.connect('mongodb://localhost:27017/empcorner',
- // err => {
- //     if(err) throw err;
- //     console.log('connected to MongoDB')
- // });
 const MongoDBstore = require("connect-mongo");
 mongoose.connect(dbUrl,{
  useNewUrlParser:true,
- //useCreateIndex:true,
+
   useUnifiedTopology:true,
- //useFindAndModify:false,
+
 });
 const db=mongoose.connection;
 db.on("error",console.error.bind(console,"connection error:"));
@@ -129,9 +121,6 @@ app.use(
   })
 );
 
-// app.use(bodyParser.urlencoded());
-// app.use(bodyParser.urlencoded({extended : true}));
-// app.use(bodyParser.json());
 
 
 const store=new MongoDBstore({
@@ -200,131 +189,6 @@ const validateEmployee=(req,res)=>{
   }
  
  
-     // app.post('/create/orderId',(req,res)=>{
-     //   console.log("create orderId request",req.body);
-       //   var options = {  amount: req.body.salary-req.body.sdm*req.body.absent,  // amount in the smallest currency unit 
-  //   currency: "INR",
-  //    receipt: "rcp1"};
-  //    instance.orders.create(options, function(err, order) {  
-  //     console.log(order);
-  //    res.send({orderId:order.id});
-  //  });
-  // })
-// app.get('/new',(req,res)=>{
-//     res.render('employees/employee')
-// })
-//  app.get('/',async(req,res)=>{
-//    const employees=await Employee.find({})
-//       res.render('employees/index',{employees})
-//   })
-
-//  app.post('/',async(req,res)=>{
-//    console.log(req.body)
-//   var {empcode,sdm,absent,year,month,name,present,salary}=req.body
-
-    
-    
-//      if(month==2 && year%4==0){
-//        absent=29-present
-//      }
-//      if(month==2 && year%4!=0){
-//        absent=28-present
-//      }
-//      if(month==4 || month==6 || month==9 || month==11){
-//        absent=30-present
-//      }
-//      if(month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12){
-//        absent=31-present
-//      }
-//      actual_salary=salary-sdm*absent
-//      const employee=new Employee({empcode,sdm,absent,year,month,name,present,salary,actual_salary})
-//      await employee.save();
-//    // req.session.user_id=user._id;
-//    //  res.send({empcode,sdm,absent,year,month,name,present,salary,actual_salary})
-//    res.redirect(`/${employee._id}`)
-//   })
-//  app.get('/:id',async(req,res)=>{
-//   const employee = await Employee.findById(req.params.id);
-  
-//   if(!employee){
-//       //req.flash('error','Cannot find that employee');
-//       return res.redirect('/')
-//   }
-//   res.render('employees/show',{employee});
-// })
-
-// app.get('/:id/edit',async(req,res)=>{
-//   const employee = await Employee.findById(req.params.id)
-//   if(!employee){
-//      // req.flash('error','Cannot find that campground');
-//       return res.redirect('/')
-//   }
-//   res.render('employees/edit',{employee});
-// })
-// app.put('/:id',async(req,res)=>{
-//   var {empcode,sdm,absent,year,month,name,present,salary}=req.body
-//   if(month==2 && year%4==0){
-//     absent=29-present
-//   }
-//   if(month==2 && year%4!=0){
-//     absent=28-present
-//   }
-//   if(month==4 || month==6 || month==9 || month==11){
-//     absent=30-present
-//   }
-//   if(month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12){
-//     absent=31-present
-//   }
-  
-//   const{id}=req.params;
-//   actual_salary=req.body.salary-req.body.sdm*req.body.absent;
-//  const employee=await Employee.findByIdAndUpdate(id,{empcode,sdm,absent,year,month,name,present,salary,actual_salary});
-//  //req.flash('success','Successfully updated campground!')
-//  res.redirect(`/${employee._id}`)
-// })
-// app.delete('/:id',async(req,res)=>{
-//   const{id}=req.params;
-//   await Employee.findByIdAndDelete(id);
-//   //req.flash('success','successfully deleted campground')
-//   res.redirect('/');
-// })
-
-// app.get('/owners/register',(req,res)=>{
-//   res.render('owners/register')
-// })
-
-// app.post('/owners/register',async(req,res)=>{
-//   try{
-//       const {email,username,password}=req.body;
-//   const owner=new Owner({email,username});
-//   const registeredOwner=await Owner.register(owner,password);
-//   console.log(registeredOwner)
-//   req.flash('success','welcome to yelpcamp')
-//   res.redirect('/')
-
-
-// }
-//   catch(e){
-//       req.flash('error',e.message)
-//       res.redirect('/owners/register')
-//   }
- 
-// });
-
-// app.get('/owners/login',(req,res)=>{
-// res.render('owners/login')
-// })
-// app.post('/owners/login',passport.authenticate('local',{failureFlash:true,failureRedirect:'/login'}),(req,res)=>{
-
-// })
-
-
-//paypal.configure({
- // 'mode': 'sandbox', //sandbox or live
- // 'client_id': paypal_client_id,
- // 'client_secret': paypal_client_secret
-//});
-
 
 var instance = new Razorpay({
   key_id: razorpay_key_id,
@@ -366,81 +230,7 @@ app.post("/api/payment/verify",(req,res)=>{
        res.send(response);
    });
    app.use(express.urlencoded({extended: true}))
-//  app.listen(port, () => {
-//    console.log(`Example app listening at http://localhost:${port}`)
-//  })
-// app.post('/pay', (req, res) => {
-//   console.log(req.params)
-//   console.log(req.body)
-//   const create_payment_json = {
-//     "intent": "sale",
-//     "payer": {
-//         "payment_method": "paypal"
-//     },
-//     "payee": {
-//       "email_address": 'sb-luvha15341713@business.example.com'
-//     },
-//     "redirect_urls": {
-//         "return_url": "http://localhost:3000/success",
-//         "cancel_url": "http://localhost:3000/cancel"
-//     },
-//     "transactions": [{
-//         "item_list": {
-//             "items": [{
-              
-//                "salary": "25.00",
-//                 "currency": "USD",
-               
-//             }]
-//         },
-//         "amount": {
-//             "currency": "USD",
-//             "total": "25.00"
-//         },
-        
-//     }]
-// };
 
-// paypal.payment.create(create_payment_json, function (error, payment) {
-//   if (error) {
-//       throw error;
-//   } else {
-//       for(let i = 0;i < payment.links.length;i++){
-//         if(payment.links[i].rel === 'approval_url'){
-//           res.redirect(payment.links[i].href);
-//         }
-//       }
-//   }
-// });
-
-// });
-
-// app.get('/success', (req, res) => {
-//   const payerId = req.query.PayerID;
-//   const paymentId = req.query.paymentId;
-
-//   const execute_payment_json = {
-//     "payer_id": payerId,
-//     "transactions": [{
-//         "amount": {
-//             "currency": "USD",
-//             "total": "25.00"
-//         }
-//     }]
-//   };
-
-//   paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
-//     if (error) {
-//         console.log(error.response);
-//         throw error;
-//     } else {
-//         console.log(JSON.stringify(payment));
-//         res.send('Success');
-//     }
-// });
-// });
-
-// app.get('/cancel', (req, res) => res.send('Cancelled'));
 app.use('/',ownerRoutes)
 app.use('/employees',employeeRoutes)
 
